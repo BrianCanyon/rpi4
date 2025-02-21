@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  app:
+    build: .
+    container_name: my_python_script
+    depends_on:
+      - db
+    volumes:
+      - ./data:/app/data  # Mount the data directory
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=brian.canyon
+      - DB_PASSWORD=kekw
+      - DB_NAME=two_circles_db
+
+  db:
+    image: mariadb:latest
+    container_name: my_mariadb_container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:
